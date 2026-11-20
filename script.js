@@ -1,48 +1,20 @@
-document.documentElement.classList.add('js');
-
 // Atualize este número no formato internacional, sem espaços ou símbolos.
 const WHATSAPP_NUMBER = '5531997839247';
-const procedures = [
-  {
-    title: 'Avaliação podológica',
-    description: 'Avaliação inicial dos pés.'
-  },
-  {
-    title: 'Corte técnico de unhas',
-    description: 'Corte e cuidado das unhas.'
-  },
-  {
-    title: 'Tratamento de unhas encravadas',
-    description: 'Atendimento podológico para unhas encravadas.'
-  },
-  {
-    title: 'Remoção de calosidades',
-    description: 'Cuidados com calos e calosidades.'
-  },
-  {
-    title: 'Tratamento de fissuras',
-    description: 'Cuidados com rachaduras nos pés.'
-  },
-  {
-    title: 'Hidratação dos pés',
-    description: 'Hidratação e cuidados com a pele.'
-  },
-  {
-    title: 'Reflexologia podal',
-    description: 'Técnica de estímulo em pontos dos pés.'
-  },
-  {
-    title: 'Tratamento de micose',
-    description: 'Atendimento e acompanhamento podológico.'
-  },
-  {
-    title: 'Órtese ungueal',
-    description: 'Procedimento para correção de curvatura da unha.'
-  },
-  {
-    title: 'Atendimento preventivo',
-    description: 'Cuidados preventivos com os pés.'
-  }
+document.documentElement.classList.add('js');
+
+// Para adicionar, copie uma linha completa; para editar, mude os textos.
+// Mantenha as aspas e a vírgula. Para remover, apague a linha do procedimento.
+const procedimentos = [
+  ['Avaliação podológica', 'Avaliação inicial dos pés'],
+  ['Corte técnico de unhas', 'Corte e cuidado das unhas'],
+  ['Tratamento de unhas encravadas', 'Atendimento podológico para unhas encravadas'],
+  ['Remoção de calosidades', 'Cuidados com calos e calosidades'],
+  ['Tratamento de fissuras', 'Cuidados com rachaduras nos pés'],
+  ['Hidratação dos pés', 'Hidratação e cuidados com a pele'],
+  ['Reflexologia podal', 'Técnica de estímulo em pontos dos pés'],
+  ['Tratamento de micose', 'Atendimento e acompanhamento podológico'],
+  ['Órtese ungueal', 'Procedimento para correção de curvatura da unha'],
+  ['Atendimento preventivo', 'Cuidados preventivos com os pés'],
 ];
 
 function createWhatsAppUrl(message) {
@@ -50,41 +22,29 @@ function createWhatsAppUrl(message) {
 }
 
 const procedureGrid = document.querySelector('#procedure-grid');
-const whatsappIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.3-4.7a8.5 8.5 0 1 1 16.2-4Z"/><path d="M9 8.3c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.8 1.8c.1.2.1.4 0 .5l-.5.7c-.2.2-.2.4-.1.6.4.7 1.1 1.4 1.8 1.8.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.7.8c.3.1.4.3.4.5 0 .3-.2 1.2-.8 1.6-.5.4-1.1.6-1.8.4-1-.2-2.2-.8-3.5-2-1.1-1-1.9-2.3-2.1-3.2-.3-1 .2-1.9.5-2.5Z"/></svg>';
-
-procedures.forEach((procedure, index) => {
-  const card = document.createElement('article');
-  card.className = 'procedure-card reveal';
-
-  const content = document.createElement('div');
-  content.className = 'procedure-content';
+procedimentos.forEach(([titleText, descriptionText], index) => {
+  const item = document.createElement('article');
+  item.className = 'procedure-item';
 
   const number = document.createElement('span');
   number.className = 'procedure-number';
   number.textContent = String(index + 1).padStart(2, '0');
 
+  const content = document.createElement('div');
+  content.className = 'procedure-content';
+
   const title = document.createElement('h3');
-  title.textContent = procedure.title;
-
+  title.textContent = titleText;
   const description = document.createElement('p');
-  description.textContent = procedure.description;
+  description.textContent = descriptionText;
 
-  const link = document.createElement('a');
-  link.className = 'procedure-button';
-  link.href = createWhatsAppUrl(`Olá! Gostaria de solicitar um orçamento para: ${procedure.title}.`);
-  link.target = '_blank';
-  link.rel = 'noopener noreferrer';
-  link.setAttribute('aria-label', `Solicitar orçamento de ${procedure.title.toLowerCase()}`);
-  link.innerHTML = `${whatsappIcon}<span>Solicitar orçamento</span>`;
-
-  content.append(number, title, description, link);
-  card.append(content);
-  procedureGrid.append(card);
+  content.append(title, description);
+  item.append(number, content);
+  procedureGrid.append(item);
 });
 
 const generalQuoteLink = document.querySelector('#general-quote-link');
 generalQuoteLink.href = createWhatsAppUrl('Olá! Gostaria de solicitar um orçamento.');
-generalQuoteLink.setAttribute('aria-label', 'Solicitar orçamento geral pelo WhatsApp');
 
 const menuToggle = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('.navigation');
@@ -111,21 +71,6 @@ navigation.querySelectorAll('a').forEach((link) => {
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') closeMenu();
 });
-
-const revealItems = document.querySelectorAll('.reveal');
-if ('IntersectionObserver' in window) {
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-  revealItems.forEach((item) => revealObserver.observe(item));
-} else {
-  revealItems.forEach((item) => item.classList.add('is-visible'));
-}
 
 const contactForm = document.querySelector('#contact-form');
 const phoneInput = document.querySelector('#phone');
