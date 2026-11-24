@@ -165,7 +165,7 @@ h2 { margin-bottom: 20px; font-size: clamp(38px, 4vw, 52px); line-height: 1.17; 
 .footer-bottom a { color: var(--rose-dark); }
 .floating-whatsapp { position: fixed; z-index: 90; right: 24px; bottom: 24px; width: 56px; height: 56px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.75); border-radius: 50%; color: var(--white); background: var(--rose-dark); box-shadow: 0 3px 10px rgba(73, 57, 66, .18); transition: background .2s ease, transform .2s ease; }
 .floating-whatsapp:hover { background: #79384d; transform: translateY(-2px); }
-.floating-whatsapp svg { width: 32px; height: 32px; display: block; }
+.floating-whatsapp .fa-whatsapp { font-size: 32px; line-height: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
